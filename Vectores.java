@@ -102,7 +102,7 @@ public class Vectores {
         }
         return -1;
     }
-    public void mostar(){
+    public void mostrar(){
         if(!VectorVacio()){
             for(int i=0; i<=this.indice; i++){
                 System.out.println(this.VectorPersona[i]);

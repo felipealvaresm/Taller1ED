@@ -1,11 +1,21 @@
 
-import package.Persona;
-import package.VectorPersona; 
+import java.util.Scanner;
 
 
 public class menu {
+    int max=0;
+
+    Scanner scanner = new Scanner(System.in);
+
+    public int numeroPersonas(){
+        System.out.println("Ingrese el numero de personas a registrar: ");
+        max = scanner.nextInt();
+        return max;
+    }
     
-    private VectorPersona vector = new VectorPersona ();
+
+    private Vectores vector = new Vectores(numeroPersonas());
+
 
     public void mostrarMenu() {
         System.out.println("Bienvenido al sistema de gestion de personas");
@@ -19,12 +29,10 @@ public class menu {
         System.out.print("Seleccione una opcion: ");
         int opcion = scanner.nextInt();
 
-        
-
         while (opcion != 4) {
             switch (opcion) {
                 case 1:
-                    if (!vector.vectorLleno()) {
+                    if (!vector.VectorLleno()) {
                         System.out.print("Ingrese el nombre: ");
                         String nombre = scanner.next();
                         System.out.print("Ingrese el apellido: ");
@@ -32,9 +40,9 @@ public class menu {
                         System.out.print("Ingrese el peso: ");
                         float peso = scanner.nextFloat();
                         System.out.print("Ingrese la altura: ");
-                        float altura = scanner.nextFloat();
+                        int altura = scanner.nextInt();
 
-                        Persona p = new Persona(nombre, apellido, peso, altura);
+                        Persona p = new Persona (nombre, apellido , altura , peso  );
                         vector.agregarPersona(p);
 
                     } else {
@@ -42,10 +50,10 @@ public class menu {
                     }
                     break;
                 case 2:
-                    vector.mostrarVector();
+                    vector.mostrar();
                     break;
                 case 3:
-                    if (!vector.vectorVacio()) {
+                    if (!vector.VectorVacio()) {
                         System.out.print("Ingrese la posicion a eliminar (0 a " + vector.getIndice() + "): ");
                         int posicion = scanner.nextInt();
                         vector.eliminarPersona(posicion);
