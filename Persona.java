@@ -1,19 +1,26 @@
 
 public class Persona {
+    private String nombre;
+    private String apellido;
+    private int estatura;
+    private float peso;
 
-    protected String nombre;
-    protected String Apellido;
-    protected int estatura;
-    protected float peso;
+    public Persona(String nombre, String apellido, int estatura, float peso) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.estatura = estatura;
+        this.peso = peso;
+    
 
-    // Constructor
-    public Persona(String nom, String Ape, int est, float pe) {
-
-        this.nombre = nom;
-        this.Apellido = Ape;
-        this.estatura = est;
-        this.peso = pe;
-
+    }
+    @Override
+    public String toString() {
+        return "Persona{" +
+                "nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", estatura=" + estatura +
+                ", peso=" + peso +
+                '}';
     }
 
     public String getNombre() {
@@ -25,11 +32,11 @@ public class Persona {
     }
 
     public String getApellido() {
-        return Apellido;
+        return apellido;
     }
 
     public void setApellido(String Apellido) {
-        this.Apellido = Apellido;
+        this.apellido = Apellido;
     }
 
     public int getEstatura() {

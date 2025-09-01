@@ -1,9 +1,8 @@
 
-
 class Persona {
     private String nombre;
 
-    public Persona(String nombre) {
+    public Persona(String nombre, String apellido, int estatura, float peso) {
         this.nombre = nombre;
     }
 
@@ -31,8 +30,11 @@ public class Vectores {
 
     }
 
-    public Persona[] getVectorPersona() {
-        return VectorPersona;
+    public Persona getPersona(int indice) {
+        if (indice >= 0 && indice < this.indice && this.VectorPersona[indice] != null) {
+            return this.VectorPersona[indice];
+        }
+        return null;
     }
 
     public void setVectorPersona(Persona[] VectorPersona) {
@@ -68,7 +70,7 @@ public class Vectores {
     public boolean VectorLleno() {
 
         if (this.max == -1) {
-            return true;
+            return this.indice == this.max - 1;
         } else {
             return false;
         }
@@ -76,38 +78,48 @@ public class Vectores {
 
     public void agregarPersona(Persona p) {
         if (!VectorLleno()) {
-            this.indice++;
-            this.VectorPersona[this.indice] = p;
 
+            this.VectorPersona[this.indice] = p;
+            this.indice++;
         } else {
             System.out.println("El vector esta lleno");
         }
     }
 
     public void eliminarPersona(int pos) {
-        if (!VectorVacio() && pos >= 0 && pos <= this.indice) {
-            for (int i = pos; i < this.indice; i++) {
+        if (pos >= 0 && pos < indice) {
+            // Mostrar la persona antes de eliminarla
+            Persona personaEliminada = this.VectorPersona[pos];
+            System.out.println("✅ Persona eliminada: " + personaEliminada);
+
+            // Desplazar elementos hacia la izquierda
+            for (int i = pos; i < indice - 1; i++) {
                 this.VectorPersona[i] = this.VectorPersona[i + 1];
             }
-            this.indice--;
+            this.VectorPersona[indice - 1] = null;
+            indice--;
+
         } else {
             System.out.println("No se puede eliminar, el vector esta vacio o la posicion es invalida");
         }
     }
-    public int buscarPersona(String nombre){
-        for(int i=0; i<=this.indice; i++){
-            if(this.VectorPersona[i].getNombre().equalsIgnoreCase(nombre)){
-                return i;
-            }
+
+    public int buscarPersona(String nombre) {
+        for (int i = 0; i < this.indice; i++) { 
+        if (this.VectorPersona[i] != null && 
+            this.VectorPersona[i].getNombre().equalsIgnoreCase(nombre)) {
+            return i;
         }
-        return -1;
     }
-    public void mostrar(){
-        if(!VectorVacio()){
-            for(int i=0; i<=this.indice; i++){
+    return -1;
+}
+
+    public void mostrar() {
+        if (!VectorVacio()) {
+            for (int i = 0; i <= this.indice; i++) {
                 System.out.println(this.VectorPersona[i]);
             }
-        }else{
+        } else {
             System.out.println("El vector esta vacio");
         }
     }

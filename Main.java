@@ -29,18 +29,21 @@ public class Main {
                     }
 
                     while (!vector.VectorLleno()) {
+
                         System.out.print("Ingrese el nombre: ");
                         String nombre = scanner.nextLine();
                         System.out.print("Ingrese el apellido: ");
                         String apellido = scanner.nextLine();
-                        System.out.print("Ingrese la estatura: ");
-                        float estatura = scanner.nextFloat();
-                        System.out.print("Ingrese el peso: ");
+                        System.out.print("Ingrese la estatura (en cm): ");
+                        int estatura = scanner.nextInt();
+                        System.out.print("Ingrese el peso (en kg): ");
                         float peso = scanner.nextFloat();
                         scanner.nextLine();
 
-                        Persona p = new Persona(nombre, apellido, estatura, peso);
-                        vector.agregarPersona(p);
+                        Persona persona = new Persona(nombre, apellido, estatura, peso);
+
+                        vector.agregarPersona(persona);
+                        System.out.println("Persona agregada exitosamente.");
 
                         if (vector.VectorLleno()) {
                             System.out.println("Se ha alcanzado el límite de personas registradas.");
@@ -54,17 +57,30 @@ public class Main {
                     break;
 
                 case 2:
+                    if (vector == null || vector.VectorVacio()) {
+                        System.out.println("No hay personas registradas para mostrar.");
+                        break;
+                    }
                     vector.mostrar();
                     break;
 
                 case 3:
-                    System.out.print("Ingrese el nombre de la persona a buscar: ");
-                    String nombreBuscar = scanner.nextLine();
-                    int posicion = vector.buscarPersona(nombreBuscar);
-                    if (posicion != -1) {
-                        System.out.println("Persona encontrada en la posición: " + posicion);
+
+                    if (vector == null || vector.VectorVacio()) {
+                        System.out.println("No hay personas registradas para buscar.");
                     } else {
-                        System.out.println("Persona no encontrada.");
+                        System.out.print("Ingrese el nombre de la persona a buscar: ");
+                        String nombreBuscar = scanner.nextLine();
+
+                        int posicion = vector.buscarPersona(nombreBuscar);
+
+                        if (posicion != -1) {
+                            Persona personaEncontrada = vector.getPersona(posicion);
+                            System.out.println(" Persona encontrada:");
+                            System.out.println(personaEncontrada);
+                        } else {
+                            System.out.println("Persona no encontrada.");
+                        }
                     }
                     break;
 
