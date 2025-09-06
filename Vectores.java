@@ -21,12 +21,13 @@ public class Vectores {
     private Persona[] VectorPersona;
     private int max;
     private int indice;
+    private int indiceActual;
 
     public Vectores(int Max) {
 
         this.max = Max;
         this.VectorPersona = new Persona[Max];
-        this.indice = -1;
+        this.indice = 0;
 
     }
 
@@ -57,42 +58,30 @@ public class Vectores {
         this.indice = indice;
     }
 
-    public boolean VectorVacio() {
-
-        if (this.indice == -1) {
-            return true;
-        } else {
-            return false;
-        }
-
+    public boolean VectorLleno() {
+        return indiceActual >= VectorPersona.length;
     }
 
-    public boolean VectorLleno() {
-
-        if (this.indice  == this.max -1) {
-            return  true;
-        } else {
-            return false;
-        }
+    public boolean VectorVacio() {
+        return indiceActual == 0;
     }
 
     public void agregarPersona(Persona p) {
         if (!VectorLleno()) {
-
-            this.VectorPersona[this.indice] = p;
-            this.indice++;
+            VectorPersona[indiceActual] = p;
+            indiceActual++;
+            System.out.println("Persona agregada Exitosamente." + p);
         } else {
-            System.out.println("El vector esta lleno");
+            System.out.println("El vector está lleno. No se puede agregar.");
         }
     }
 
     public void eliminarPersona(int pos) {
         if (pos >= 0 && pos < indice) {
-            // Mostrar la persona antes de eliminarla
+
             Persona personaEliminada = this.VectorPersona[pos];
             System.out.println(" Persona eliminada: " + personaEliminada);
 
-            
             for (int i = pos; i < indice - 1; i++) {
                 this.VectorPersona[i] = this.VectorPersona[i + 1];
             }
@@ -105,14 +94,16 @@ public class Vectores {
     }
 
     public int buscarPersona(String nombre) {
-        for (int i = 0; i < this.indice; i++) { 
-        if (this.VectorPersona[i] != null && 
-            this.VectorPersona[i].getNombre().equalsIgnoreCase(nombre)) {
-            return i;
+        for (int i = 0; i < this.indiceActual; i++) {
+            if (this.VectorPersona[i] != null &&
+                    this.VectorPersona[i].getNombre().equalsIgnoreCase(nombre)) {
+                System.out.println(this.VectorPersona[i]);
+                System.out.println("Persona encontrada en la posición: " + i);
+                return i;
+            }
         }
+        return -1;
     }
-    return -1;
-}
 
     public void mostrar() {
         if (!VectorVacio()) {

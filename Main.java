@@ -9,14 +9,6 @@ public class Main {
         System.out.println("Bienvenido al sistema de gestión de personas");
 
         int opcion;
-        boolean Conti = true;
-
-        if (vector == null || vector.VectorLleno()) {
-            System.out.println("Ingrese el número de personas a registrar: ");
-            int max = scanner.nextInt();
-            scanner.nextLine();
-            vector = new Vectores(max);
-        }
 
         do {
             System.out.println("1. Agregar personas");
@@ -29,7 +21,14 @@ public class Main {
             scanner.nextLine();
 
             switch (opcion) {
-                case 1:   
+                case 1:
+                    if (vector == null) {
+                        System.out.println("Ingrese el número de personas a registrar: ");
+                        int max = scanner.nextInt();
+                        scanner.nextLine();
+                        vector = new Vectores(max);
+                    }
+
                     System.out.print("Ingrese el nombre: ");
                     String nombre = scanner.nextLine();
                     System.out.print("Ingrese el apellido: ");
@@ -42,22 +41,14 @@ public class Main {
 
                     Persona persona = new Persona(nombre, apellido, estatura, peso);
                     vector.agregarPersona(persona);
-                    System.out.println("Persona agregada exitosamente.");
 
-                    /*if (!vector.VectorLleno()) {
-                        System.out.print("¿Desea agregar otra persona? (sí/no): ");
-                        String continuar = scanner.nextLine();
-                        if (!continuar.equalsIgnoreCase("sí") && !continuar.equalsIgnoreCase("si")) {
-                            System.out.println("Gracias,Regresando al menú principal");
-                        }*/
-
-                    /*  } else {
-                        System.out.println("Se ha alcanzado el límite máximo de personas.");
-                    }*/
                     break;
                 case 2:
-
-                    vector.mostrar();
+                    if (vector == null || vector.VectorVacio()) {
+                        System.out.println("No hay personas registradas.");
+                    } else {
+                        vector.mostrar();
+                    }
                     break;
 
                 case 3:
@@ -65,18 +56,12 @@ public class Main {
                     if (vector == null || vector.VectorVacio()) {
                         System.out.println("No hay personas registradas para buscar.");
                     } else {
+
                         System.out.print("Ingrese el nombre de la persona a buscar: ");
                         String nombreBuscar = scanner.nextLine();
 
-                        int posicion = vector.buscarPersona(nombreBuscar);
+                        vector.buscarPersona(nombreBuscar);
 
-                        if (posicion != -1) {
-                            Persona personaEncontrada = vector.getPersona(posicion);
-                            System.out.println(" Persona encontrada:");
-                            System.out.println(personaEncontrada);
-                        } else {
-                            System.out.println("Persona no encontrada.");
-                        }
                     }
                     break;
 
@@ -110,6 +95,7 @@ public class Main {
             }
 
         } while (opcion != 5);
+
     }
 
     public static void main(String[] args) {
