@@ -26,7 +26,7 @@ public class Vectores {
 
         this.max = Max;
         this.VectorPersona = new Persona[Max];
-        this.indice = indice;
+        this.indice = -1;
 
     }
 
@@ -69,8 +69,8 @@ public class Vectores {
 
     public boolean VectorLleno() {
 
-        if (this.max == -1) {
-            return this.indice == this.max - 1;
+        if (this.indice  == this.max -1) {
+            return  true;
         } else {
             return false;
         }
@@ -90,9 +90,9 @@ public class Vectores {
         if (pos >= 0 && pos < indice) {
             // Mostrar la persona antes de eliminarla
             Persona personaEliminada = this.VectorPersona[pos];
-            System.out.println("✅ Persona eliminada: " + personaEliminada);
+            System.out.println(" Persona eliminada: " + personaEliminada);
 
-            // Desplazar elementos hacia la izquierda
+            
             for (int i = pos; i < indice - 1; i++) {
                 this.VectorPersona[i] = this.VectorPersona[i + 1];
             }

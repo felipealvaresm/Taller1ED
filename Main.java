@@ -9,6 +9,15 @@ public class Main {
         System.out.println("Bienvenido al sistema de gestión de personas");
 
         int opcion;
+        boolean Conti = true;
+
+        if (vector == null || vector.VectorLleno()) {
+            System.out.println("Ingrese el número de personas a registrar: ");
+            int max = scanner.nextInt();
+            scanner.nextLine();
+            vector = new Vectores(max);
+        }
+
         do {
             System.out.println("1. Agregar personas");
             System.out.println("2. Mostrar personas");
@@ -20,47 +29,34 @@ public class Main {
             scanner.nextLine();
 
             switch (opcion) {
-                case 1:
-                    if (vector == null || vector.VectorLleno()) {
-                        System.out.print("Ingrese el número de personas a registrar: ");
-                        int max = scanner.nextInt();
-                        scanner.nextLine();
-                        vector = new Vectores(max);
-                    }
+                case 1:   
+                    System.out.print("Ingrese el nombre: ");
+                    String nombre = scanner.nextLine();
+                    System.out.print("Ingrese el apellido: ");
+                    String apellido = scanner.nextLine();
+                    System.out.print("Ingrese la estatura (en cm): ");
+                    int estatura = scanner.nextInt();
+                    System.out.print("Ingrese el peso (en kg): ");
+                    float peso = scanner.nextFloat();
+                    scanner.nextLine();
 
-                    while (!vector.VectorLleno()) {
+                    Persona persona = new Persona(nombre, apellido, estatura, peso);
+                    vector.agregarPersona(persona);
+                    System.out.println("Persona agregada exitosamente.");
 
-                        System.out.print("Ingrese el nombre: ");
-                        String nombre = scanner.nextLine();
-                        System.out.print("Ingrese el apellido: ");
-                        String apellido = scanner.nextLine();
-                        System.out.print("Ingrese la estatura (en cm): ");
-                        int estatura = scanner.nextInt();
-                        System.out.print("Ingrese el peso (en kg): ");
-                        float peso = scanner.nextFloat();
-                        scanner.nextLine();
+                    /*if (!vector.VectorLleno()) {
+                        System.out.print("¿Desea agregar otra persona? (sí/no): ");
+                        String continuar = scanner.nextLine();
+                        if (!continuar.equalsIgnoreCase("sí") && !continuar.equalsIgnoreCase("si")) {
+                            System.out.println("Gracias,Regresando al menú principal");
+                        }*/
 
-                        Persona persona = new Persona(nombre, apellido, estatura, peso);
-
-                        vector.agregarPersona(persona);
-                        System.out.println("Persona agregada exitosamente.");
-
-                        if (vector.VectorLleno()) {
-                            System.out.println("Se ha alcanzado el límite de personas registradas.");
-                        } else {
-                            System.out.print("¿Desea agregar otra persona? (sí/no): ");
-                            String continuar = scanner.nextLine();
-                            if (!continuar.equalsIgnoreCase("sí"))
-                                break;
-                        }
-                    }
+                    /*  } else {
+                        System.out.println("Se ha alcanzado el límite máximo de personas.");
+                    }*/
                     break;
-
                 case 2:
-                    if (vector == null || vector.VectorVacio()) {
-                        System.out.println("No hay personas registradas para mostrar.");
-                        break;
-                    }
+
                     vector.mostrar();
                     break;
 
