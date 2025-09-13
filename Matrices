@@ -1,4 +1,4 @@
-public class Matriz{
+public class Matrices{
 
 
 private int fila;
@@ -67,13 +67,10 @@ public void mostrarMatriz(){
             System.out.println(MatrizPersona[i][j]);
         }
     }
-}
-        } else {
-            System.out.println("Posición inválida. No se puede eliminar.");
-        }
-    
-public void agregarPersonaMatriz(Persona p){
+    }
+ public void agregarPersonaMatriz(Persona p){
     if(!MatrizLlena()){
+    if (indiceF != fila && indiceC != columna){
         if(indiceC < columna -1){
             indiceC++;
         }else{
@@ -81,10 +78,12 @@ public void agregarPersonaMatriz(Persona p){
             indiceC = 0;
         }
         MatrizPersona[indiceF][indiceC] = p;
-        System.out.println("Persona agregada exitosamente en la posición [" + indiceF + "][" + indiceC + "]: " + p);
-    }else{
-        System.out.println("La matriz está llena. No se puede agregar más personas.");
+        System.out.println("Persona agregada exitosamente: " + p);
     }
-
-
+    }
+    }
 }
+
+
+
+ //if( indiceF == fila -1 && indiceC == columna-1){
