@@ -97,6 +97,7 @@ public class Matrices {
             System.out.println("La matriz esta llena, no se puede agregar mas personas");
         }
     }
+
     public void eliminarPersona(int fila, int columna) {
         if (fila >= 0 && fila <= indiceF && columna >= 0 && columna <= indiceC) {
             Persona personaEliminada = this.MatrizPersona[fila][columna];
@@ -130,6 +131,7 @@ public class Matrices {
             System.out.println("Posición inválida. No se puede eliminar.");
         }
     }
+
     public int buscarPersona(String nombre) {
         for (int i = 0; i <= this.indiceF; i++) {
             for (int j = 0; j <= this.indiceC; j++) {
@@ -142,14 +144,14 @@ public class Matrices {
             }
         }
         return -1;
-    } 
+    }
 
 }
 
-
-/*hacer 2 metodos en el cual la matriz principal sume los pesos y me devuelva el promedo de peso 
-    * y otro metodo que sume las estaturas y me devuelva el promedio de estatura
+/*
+ * hacer 2 metodos en el cual la matriz principal sume los pesos y me devuelva
+ * el promedo de peso
+ * y otro metodo que sume las estaturas y me devuelva el promedio de estatura
  * 
- * y crear un menu para matrices y otro para metodos 
+ * y crear un menu para matrices y otro para metodos
  */
-
