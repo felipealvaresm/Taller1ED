@@ -85,16 +85,25 @@ public class Matrices {
 
     public void ingresarPersonaSecuencial1(Persona p) {
         if (!MatrizLlena()) {
+            if (this.indiceF >= this.fila || this.indiceF < 0) {
+                System.out.println("Error: índice de fila fuera de rango (" + this.indiceF + ")");
+                return;
+            }
+
             if (this.indiceC < this.columna - 1) {
                 this.indiceC++;
-                this.MatrizPersona[this.indiceF][this.indiceC] = p;
             } else {
                 this.indiceF++;
                 this.indiceC = 0;
+            }
+
+            if (this.indiceF < this.fila && this.indiceC < this.columna) {
                 this.MatrizPersona[this.indiceF][this.indiceC] = p;
+            } else {
+                System.out.println("Error: no se puede insertar, índice fuera de rango.");
             }
         } else {
-            System.out.println("La matriz esta llena, no se puede agregar mas personas");
+            System.out.println("La matriz está llena, no se puede agregar más personas.");
         }
     }
 
@@ -146,6 +155,48 @@ public class Matrices {
         return -1;
     }
 
+    public double promedioPeso() {
+        double sumaPeso = 0;
+        int contador = 0;
+
+        for (int i = 0; i <= this.indiceF; i++) {
+            for (int j = 0; j <= this.indiceC; j++) {
+                if (this.MatrizPersona[i][j] != null) {
+                    sumaPeso += this.MatrizPersona[i][j].getPeso();
+                    contador++;
+                }
+            }
+        }
+
+        return (contador > 0) ? sumaPeso / contador : 0;
+    }
+
+    public double promedioEstatura() {
+
+        double sumaEstatura = 0;
+        int contador = 0;
+
+        for (int i = 0; i <= this.indiceF; i++) {
+            for (int j = 0; j <= this.indiceC; j++) {
+                if (this.MatrizPersona[i][j] != null) {
+                    sumaEstatura += this.MatrizPersona[i][j].getEstatura();
+                    contador++;
+
+                }
+            }
+
+        }
+
+        return (contador > 0) ? sumaEstatura / contador : 0;
+    }
+
+    public void promedioEstaturaYPeso() {
+        double promedioEstatura = promedioEstatura();
+        double promedioPeso = promedioPeso();
+
+        System.out.println("Promedio de Estatura: " + promedioEstatura + " cm");
+        System.out.println("Promedio de Peso: " + promedioPeso + " kg");
+    }
 }
 
 /*

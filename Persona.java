@@ -3,7 +3,7 @@ public class Persona {
     private String nombre;
     private String apellido;
     private int estatura;
-    private float peso;
+    private double peso;
 
     public Persona(String nombre, String apellido, int estatura, float peso) {
         this.nombre = nombre;
@@ -47,11 +47,11 @@ public class Persona {
         this.estatura = estatura;
     }
 
-    public float getPeso() {
-        return peso;
+    public Double getPeso() {
+        return (double) peso;
     }
 
-    public void setPeso(float peso) {
+    public void setPeso(double peso) {
         this.peso = peso;
     }
 
