@@ -14,6 +14,16 @@ class Persona {
     public String toString() {
         return "Persona{" + "nombre='" + nombre + '\'' + '}';
     }
+
+	public double getEstatura() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getEstatura'");
+	}
+
+    public float getPeso() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPeso'");
+    }
 }
 
 public class Vectores {

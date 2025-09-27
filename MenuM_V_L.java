@@ -1,11 +1,12 @@
 import java.util.Scanner;
 
-public class MenuM_M_V {
+public class MenuM_V_L {
 
     private int opcion;
     private Vectores vector;
     private Scanner scanner = new Scanner(System.in);
-    private Matrices matriz; 
+    private Matrices matriz;
+    private ListaSimple lista;
 
     public void MenuM_M_V() {
         this.scanner = new Scanner(System.in);
@@ -16,7 +17,7 @@ public class MenuM_M_V {
             System.out.println("Seleccione una opción:");
             System.out.println("1. Vectores");
             System.out.println("2. Matrices");
-            System.out.println("3. Métodos");
+            System.out.println("3. Menu Listas");
             System.out.println("4. Salir");
             System.out.print("Ingrese su opción: ");
             opcion = scanner.nextInt();
@@ -30,8 +31,7 @@ public class MenuM_M_V {
                     menuMatrices();
                     break;
                 case 3:
-                    // Aquí se agregara la llamada al menú de métodos si lo tienes implementado
-                    System.out.println("Menú de Métodos no implementado aún.");
+                    menuListas();
                     break;
                 case 4:
                     System.out.println("Saliendo del sistema...");
@@ -133,24 +133,23 @@ public class MenuM_M_V {
 
     }
 
-   public void menuMatrices() {
-    System.out.println("Bienvenido al Menu de Matrices");
+    public void menuMatrices() {
+        System.out.println("Bienvenido al Menu de Matrices");
 
-    int opcion; 
+        int opcion;
 
-    do {
-        System.out.println("\nSeleccione una opción:");
-        System.out.println("1. Agregar Persona");
-        System.out.println("2. Mostrar Personas");
-        System.out.println("3. Eliminar Persona");
-        System.out.println("4. Buscar Persona");
-        System.out.println("5. Promedio de estatura y peso");
-        System.out.println("6. Salir");
-        System.out.print("Ingrese su opción: ");
+        do {
+            System.out.println("\nSeleccione una opción:");
+            System.out.println("1. Agregar Persona");
+            System.out.println("2. Mostrar Personas");
+            System.out.println("3. Eliminar Persona");
+            System.out.println("4. Buscar Persona");
+            System.out.println("5. Promedio de estatura y peso");
+            System.out.println("6. Salir");
+            System.out.print("Ingrese su opción: ");
 
-        
-        opcion = scanner.nextInt();
-        scanner.nextLine();
+            opcion = scanner.nextInt();
+            scanner.nextLine();
 
             switch (opcion) {
                 case 1:
@@ -161,11 +160,10 @@ public class MenuM_M_V {
                         System.out.println("Ingrese el número de columnas de la matriz: ");
                         int columnas = scanner.nextInt();
                         scanner.nextLine();
-                        matriz = new Matrices(filas, columnas); 
+                        matriz = new Matrices(filas, columnas);
 
                         System.out.println("Matriz de " + filas + "x" + columnas + " creada.");
 
-                    
                     }
                     System.out.print("Ingrese el nombre: ");
                     String nombre = scanner.nextLine();
@@ -178,44 +176,32 @@ public class MenuM_M_V {
                     scanner.nextLine();
                     Persona p = new Persona(nombre, apellido, estatura, peso);
                     matriz.ingresarPersonaSecuencial1(p);
-                    
+
                     break;
                 case 2:
-                    
+
                     if (matriz == null || matriz.MatrizVacia()) {
                         System.out.println("No hay personas registradas.");
                     } else {
-                        matriz.MatrizVacia();
+                        matriz.mostrarPersona();
                     }
-                    
-                    //  mostrar personas
+
+                    // mostrar personas
                     break;
                 case 3:
                     if (matriz == null || matriz.MatrizVacia()) {
                         System.out.println("No hay personas registradas para eliminar.");
                     } else {
-                        int indiceActual = matriz.getIndiceF() * matriz.getIndiceC();
-                        System.out.print("Ingrese la posición a eliminar (0 a " + (indiceActual - 1) + "): ");
+                        System.out.print("Ingrese la fila de la persona a eliminar: ");
+                        int fila = scanner.nextInt();
+                        System.out.print("Ingrese la columna de la persona a eliminar: ");
+                        int columna = scanner.nextInt();
+                        scanner.nextLine(); 
 
-                        if (scanner.hasNextInt()) {
-                            int posicionPersona = scanner.nextInt();
-                            scanner.nextLine();
+                        matriz.eliminarPersona(fila, columna);
 
-                            if (posicionPersona >= 0 && posicionPersona < indiceActual) {
-                                // Aquí debes convertir la posición lineal a índices de fila y columna
-                                int filas = matriz.getIndiceF();
-                                int columnas = matriz.getIndiceC();
-                                int fila = posicionPersona / columnas;
-                                int columna = posicionPersona % columnas;
-
-                                matriz.eliminarPersona(fila, columna);
-                                System.out.println("Persona eliminada de la posición " + posicionPersona + ".");
-                            } else {
-                                System.out.println("Error: La posición " + posicionPersona + " no es válida.");
-                            }
-                        }
                     }
-                    //  eliminar persona
+                    // eliminar persona
                     break;
                 case 4:
                     if (matriz == null || matriz.MatrizVacia()) {
@@ -245,4 +231,79 @@ public class MenuM_M_V {
             }
         } while (opcion != 6);
     }
+
+    public void menuListas() {
+        System.out.println("Bienvenido al Menu de Listas");
+
+        int opcion;
+
+        do {
+            System.out.println("\nSeleccione una opción:");
+            System.out.println("1. Agregar Persona");
+            System.out.println("2. Mostrar Personas");
+            System.out.println("3. Eliminar Persona");
+            System.out.println("4. Buscar Persona");
+            System.out.println("5. Promedio de estatura y peso");
+            System.out.println("6. Salir");
+            System.out.print("Ingrese su opción: ");
+
+            opcion = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcion) {
+
+                case 1:
+                    // agregar persona
+                    if (lista == null) {
+                        System.out.println("Creando una nueva lista...");
+                        lista = new ListaSimple();
+
+                        Scanner scanner = new Scanner(System.in);
+                        System.out.print("Ingrese el nombre de la persona: ");
+                        String nombre = scanner.nextLine();
+
+                        System.out.print("Ingrese el apellido de la persona: ");
+                        String apellido = scanner.nextLine();
+
+                        System.out.print("Ingrese la estatura (en cm): ");
+                        int estatura = scanner.nextInt();
+
+                        System.out.print("Ingrese el peso (en kg): ");
+                        float peso = scanner.nextFloat();
+                        scanner.nextLine();
+
+                        Persona nuevaPersona = new Persona(nombre, apellido, estatura, peso);
+                        lista.agregarPersonaInicio(nuevaPersona);
+
+                        System.out.println("Persona agregada exitosamente.");
+
+                        break;
+
+                    }
+
+                    // agregar persona
+                    break;
+                case 2:
+                    // mostrar personas
+                    break;
+                case 3:
+                    // eliminar persona
+                    break;
+                case 4:
+                    // buscar persona
+                    break;
+                case 5:
+                    // promedio estatura y peso
+                    break;
+                case 6:
+                    System.out.println("Saliendo del sistema de listas...");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Por favor, intente de nuevo.");
+
+            }
+        } while (opcion != 6);
+
+    }
 }
+/* juego torres de Hanoi , termino de recursividad */

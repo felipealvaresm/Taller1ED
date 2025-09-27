@@ -5,16 +5,17 @@ public class Matrices {
     private Persona[][] MatrizPersona;
     int indiceF;
     int indiceC;
+    int indiceActual;
 
     public Matrices() {
     }
 
-    public Matrices(int fila, int columna) {
-        this.fila = fila;
-        this.columna = columna;
-        this.indiceF = -1;
-        this.indiceC = -1;
-        this.MatrizPersona = new Persona[fila][columna];
+    public Matrices(int filas, int columnas) {
+        this.fila = filas;
+        this.columna = columnas;
+        this.indiceF = 0;
+        this.indiceC = 0;
+        this.MatrizPersona = new Persona[filas][columnas];
 
     }
 
@@ -68,11 +69,7 @@ public class Matrices {
     }
 
     public boolean MatrizLlena() {
-        if (indiceF == fila - 1 && indiceC == columna - 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return (this.indiceF == fila);
     }
 
     public void mostrarMatriz() {
@@ -85,20 +82,15 @@ public class Matrices {
 
     public void ingresarPersonaSecuencial1(Persona p) {
         if (!MatrizLlena()) {
-            if (this.indiceF >= this.fila || this.indiceF < 0) {
-                System.out.println("Error: índice de fila fuera de rango (" + this.indiceF + ")");
-                return;
-            }
+            if (indiceF < fila && indiceC < columna) {
+                MatrizPersona[indiceF][indiceC] = p;
+                System.out.println("Insertado en [" + indiceF + "][" + indiceC + "]");
 
-            if (this.indiceC < this.columna - 1) {
-                this.indiceC++;
-            } else {
-                this.indiceF++;
-                this.indiceC = 0;
-            }
-
-            if (this.indiceF < this.fila && this.indiceC < this.columna) {
-                this.MatrizPersona[this.indiceF][this.indiceC] = p;
+                indiceC++;
+                if (indiceC == columna) {
+                    indiceC = 0;
+                    indiceF++;
+                }
             } else {
                 System.out.println("Error: no se puede insertar, índice fuera de rango.");
             }
@@ -107,38 +99,52 @@ public class Matrices {
         }
     }
 
-    public void eliminarPersona(int fila, int columna) {
-        if (fila >= 0 && fila <= indiceF && columna >= 0 && columna <= indiceC) {
-            Persona personaEliminada = this.MatrizPersona[fila][columna];
-            System.out.println(" Persona eliminada: " + personaEliminada);
-            this.MatrizPersona[fila][columna] = null;
+    public void mostrarPersona() {
+        int totalPersonas = 0;
 
-            // Reorganiza la matriz para llenar el espacio vacío
-            for (int i = fila; i <= indiceF; i++) {
-                for (int j = (i == fila ? columna : 0); j < columna; j++) {
-                    if (i == indiceF && j == indiceC) {
-                        this.MatrizPersona[i][j] = null;
-                    } else if (j == columna - 1) {
-                        this.MatrizPersona[i][j] = this.MatrizPersona[i + 1][0];
-                    } else {
-                        this.MatrizPersona[i][j] = this.MatrizPersona[i][j + 1];
-                    }
+        for (int i = 0; i < fila; i++) {
+            for (int j = 0; j < columna; j++) {
+                if (MatrizPersona[i][j] != null) {
+                    System.out
+                            .println("Persona en la fila [" + i + "] y la columna [" + j + "]: " + MatrizPersona[i][j]);
+                    totalPersonas++;
                 }
             }
-
-            // Actualiza los índices
-            if (indiceC == 0) {
-                if (indiceF > 0) {
-                    indiceF--;
-                    indiceC = columna - 1;
-                }
-            } else {
-                indiceC--;
-            }
-
-        } else {
-            System.out.println("Posición inválida. No se puede eliminar.");
         }
+
+        System.out.println("Total de personas registradas: " + totalPersonas);
+    }
+
+    public void eliminarPersona(int fila, int columna) {
+    int posEliminar = fila * this.columna + columna;
+    int totalPersonas = indiceF * this.columna + indiceC;
+
+    if (posEliminar >= totalPersonas || MatrizPersona[fila][columna] == null) {
+        System.out.println("Error: La posición [" + fila + "][" + columna + "] no es válida o está vacía.");
+        return;
+    }
+
+    System.out.println("Persona eliminada: " + MatrizPersona[fila][columna]);
+    MatrizPersona[fila][columna] = null;
+
+    // Desplaza personas hacia atrás
+    for (int k = posEliminar + 1; k < totalPersonas; k++) {
+        int origenF = k / columna;
+        int origenC = k % columna;
+        int destinoF = (k - 1) / columna;
+        int destinoC = (k - 1) % columna;
+
+        MatrizPersona[destinoF][destinoC] = MatrizPersona[origenF][origenC];
+        MatrizPersona[origenF][origenC] = null;
+    }
+
+    // Actualiza índices
+    if (indiceC == 0) {
+        indiceF--;
+        indiceC = columna - 1;
+    } else {
+        indiceC--;
+    }
     }
 
     public int buscarPersona(String nombre) {
@@ -155,8 +161,8 @@ public class Matrices {
         return -1;
     }
 
-    public double promedioPeso() {
-        double sumaPeso = 0;
+    public float promedioPeso() {
+        float sumaPeso = 0;
         int contador = 0;
 
         for (int i = 0; i <= this.indiceF; i++) {

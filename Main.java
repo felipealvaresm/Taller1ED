@@ -2,7 +2,7 @@
 public class Main {
 
     private void mostrarMenu() {
-        MenuM_M_V menu = new MenuM_M_V();
+        MenuM_V_L menu = new MenuM_V_L();
         menu.MenuM_M_V();
     }
     
