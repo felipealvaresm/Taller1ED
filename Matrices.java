@@ -115,58 +115,82 @@ public class Matrices {
         System.out.println("Total de personas registradas: " + totalPersonas);
     }
 
-    public void eliminarPersona(int fila, int columna) {
-    int posEliminar = fila * this.columna + columna;
-    int totalPersonas = indiceF * this.columna + indiceC;
-
-    if (posEliminar >= totalPersonas || MatrizPersona[fila][columna] == null) {
-        System.out.println("Error: La posición [" + fila + "][" + columna + "] no es válida o está vacía.");
-        return;
-    }
-
-    System.out.println("Persona eliminada: " + MatrizPersona[fila][columna]);
-    MatrizPersona[fila][columna] = null;
-
-    // Desplaza personas hacia atrás
-    for (int k = posEliminar + 1; k < totalPersonas; k++) {
-        int origenF = k / columna;
-        int origenC = k % columna;
-        int destinoF = (k - 1) / columna;
-        int destinoC = (k - 1) % columna;
-
-        MatrizPersona[destinoF][destinoC] = MatrizPersona[origenF][origenC];
-        MatrizPersona[origenF][origenC] = null;
-    }
-
-    // Actualiza índices
-    if (indiceC == 0) {
-        indiceF--;
-        indiceC = columna - 1;
-    } else {
-        indiceC--;
-    }
-    }
-
-    public int buscarPersona(String nombre) {
-        for (int i = 0; i <= this.indiceF; i++) {
-            for (int j = 0; j <= this.indiceC; j++) {
-                if (this.MatrizPersona[i][j] != null &&
-                        this.MatrizPersona[i][j].getNombre().equalsIgnoreCase(nombre)) {
-                    System.out.println(this.MatrizPersona[i][j]);
-                    System.out.println("Persona encontrada en la posición: Fila " + i + ", Columna " + j);
-                    return i;
+    public int[] buscarPosicionPorNombre(String nombre) {
+        for (int i = 0; i <= indiceF; i++) {
+            int limiteColumna = (i == indiceF) ? indiceC : columna;
+            for (int j = 0; j < limiteColumna; j++) {
+                if (MatrizPersona[i][j] != null &&
+                        MatrizPersona[i][j].getNombre().equalsIgnoreCase(nombre)) {
+                    return new int[] { i, j }; // [fila, columna]
                 }
             }
         }
-        return -1;
+        return null; // No encontrada
+    }
+
+    public void eliminarPersona(int fila, int columna) {
+        int posEliminar = fila * this.columna + columna;
+        int totalPersonas = indiceF * this.columna + indiceC;
+
+        if (posEliminar >= totalPersonas || MatrizPersona[fila][columna] == null) {
+            System.out.println("Error: La posición [" + fila + "][" + columna + "] no es válida o está vacía.");
+            return;
+        }
+
+        System.out.println("Persona eliminada: " + MatrizPersona[fila][columna]);
+        MatrizPersona[fila][columna] = null;
+
+        // Desplaza personas hacia atrás
+        for (int k = posEliminar + 1; k < totalPersonas; k++) {
+            int origenF = k / columna;
+            int origenC = k % columna;
+            int destinoF = (k - 1) / columna;
+            int destinoC = (k - 1) % columna;
+
+            MatrizPersona[destinoF][destinoC] = MatrizPersona[origenF][origenC];
+            MatrizPersona[origenF][origenC] = null;
+        }
+
+        // Actualiza índices
+        if (indiceC == 0) {
+            indiceF--;
+            indiceC = columna - 1;
+        } else {
+            indiceC--;
+        }
+    }
+
+    public void buscarPersona(String nombre) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            System.out.println("Nombre inválido.");
+            return;
+        }
+
+        boolean encontrado = false;
+        for (int i = 0; i < this.fila; i++) {
+            for (int j = 0; j < this.columna; j++) {
+                Persona p = MatrizPersona[i][j];
+                if (p != null && p.getNombre().equalsIgnoreCase(nombre.trim())) {
+                    System.out.println("Persona encontrada en la posición [" + i + "][" + j + "]:");
+                    System.out.println(p);
+                    encontrado = true;
+
+                }
+            }
+        }
+
+        if (!encontrado) {
+            System.out.println("No se encontró ninguna persona con el nombre: " + nombre);
+        }
     }
 
     public float promedioPeso() {
         float sumaPeso = 0;
         int contador = 0;
 
-        for (int i = 0; i <= this.indiceF; i++) {
-            for (int j = 0; j <= this.indiceC; j++) {
+        // Recorre TODAS las filas y columnas
+        for (int i = 0; i < this.fila; i++) {
+            for (int j = 0; j < this.columna; j++) {
                 if (this.MatrizPersona[i][j] != null) {
                     sumaPeso += this.MatrizPersona[i][j].getPeso();
                     contador++;
@@ -178,19 +202,16 @@ public class Matrices {
     }
 
     public double promedioEstatura() {
-
         double sumaEstatura = 0;
         int contador = 0;
 
-        for (int i = 0; i <= this.indiceF; i++) {
-            for (int j = 0; j <= this.indiceC; j++) {
+        for (int i = 0; i < this.fila; i++) {
+            for (int j = 0; j < this.columna; j++) {
                 if (this.MatrizPersona[i][j] != null) {
                     sumaEstatura += this.MatrizPersona[i][j].getEstatura();
                     contador++;
-
                 }
             }
-
         }
 
         return (contador > 0) ? sumaEstatura / contador : 0;

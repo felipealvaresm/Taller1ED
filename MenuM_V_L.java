@@ -178,6 +178,8 @@ public class MenuM_V_L {
                     matriz.ingresarPersonaSecuencial1(p);
 
                     break;
+
+                // mostrar personas
                 case 2:
 
                     if (matriz == null || matriz.MatrizVacia()) {
@@ -186,7 +188,7 @@ public class MenuM_V_L {
                         matriz.mostrarPersona();
                     }
 
-                    // mostrar personas
+                    // eliminar persona
                     break;
                 case 3:
                     if (matriz == null || matriz.MatrizVacia()) {
@@ -196,26 +198,24 @@ public class MenuM_V_L {
                         int fila = scanner.nextInt();
                         System.out.print("Ingrese la columna de la persona a eliminar: ");
                         int columna = scanner.nextInt();
-                        scanner.nextLine(); 
+                        scanner.nextLine();
 
                         matriz.eliminarPersona(fila, columna);
 
                     }
-                    // eliminar persona
+
+                    // buscar persona
                     break;
                 case 4:
                     if (matriz == null || matriz.MatrizVacia()) {
                         System.out.println("No hay personas registradas para buscar.");
                     } else {
-
                         System.out.print("Ingrese el nombre de la persona a buscar: ");
                         String nombreBuscar = scanner.nextLine();
-
                         matriz.buscarPersona(nombreBuscar);
-
                     }
-                    // buscar persona
                     break;
+
                 case 5:
                     if (matriz == null || matriz.MatrizVacia()) {
                         System.out.println("No hay personas registradas.");
@@ -223,6 +223,7 @@ public class MenuM_V_L {
                         matriz.promedioEstaturaYPeso();
                     }
                     break;
+                    
                 case 6:
                     System.out.println("Saliendo del sistema de matrices...");
                     break;
