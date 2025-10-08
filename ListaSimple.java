@@ -1,11 +1,11 @@
 public class ListaSimple {
-    private Nodo P, U, Q, T;
+    private Nodo P, U, Q;
 
     public ListaSimple() {
-        this.P = null;
-        this.U = null;
-        this.Q = null;
-        this.T = null;
+        this.P = null;//primero
+        this.U = null;//ultimo
+        this.Q = null; // Auxiliar
+
     }
 
     public ListaSimple(Persona Persona) {
@@ -13,7 +13,6 @@ public class ListaSimple {
         this.P = nuevo;
         this.U = nuevo;
         this.Q = null;
-        this.T = null;
     }
 
     public Nodo getP() {
@@ -40,13 +39,6 @@ public class ListaSimple {
         Q = q;
     }
 
-    public Nodo getT() {
-        return T;
-    }
-
-    public void setT(Nodo t) {
-        T = t;
-    }
 
     public boolean ListaVacia() {
         if (this.P == null) {
