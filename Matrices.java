@@ -231,5 +231,5 @@ public class Matrices {
  * el promedo de peso
  * y otro metodo que sume las estaturas y me devuelva el promedio de estatura
  * 
- * y crear un menu para matrices y otro para metodos
+ * y crear un menu para matrices
  */

@@ -17,7 +17,7 @@ public class MenuM_V_L {
             System.out.println("Seleccione una opción:");
             System.out.println("1. Vectores");
             System.out.println("2. Matrices");
-            System.out.println("3. Menu Listas");
+            System.out.println("3. Listas");
             System.out.println("4. Salir");
             System.out.print("Ingrese su opción: ");
             opcion = scanner.nextInt();
@@ -234,9 +234,11 @@ public class MenuM_V_L {
     }
 
     public void menuListas() {
-        System.out.println("Bienvenido al Menu de Listas");
+    Scanner scanner = new Scanner(System.in);
+    ListaSimple lista = new ListaSimple();  // Lista se Inicializa aquí
+    int opcion;
 
-        int opcion;
+    System.out.println("Bienvenido al Menu de Listas");
 
         do {
             System.out.println("\nSeleccione una opción:");
@@ -252,59 +254,64 @@ public class MenuM_V_L {
             scanner.nextLine();
 
             switch (opcion) {
+                // Agregar Persona
+        case 1:
+            System.out.print("Ingrese el nombre: ");
+            String nombre = scanner.nextLine();
+            System.out.print("Ingrese el apellido: ");
+            String apellido = scanner.nextLine();
+            System.out.print("Ingrese la estatura (cm): ");
+            int estatura = scanner.nextInt();
+            System.out.print("Ingrese el peso (kg): ");
+            float peso = scanner.nextFloat();
+            scanner.nextLine();
 
-                case 1:
-                    // agregar persona
-                    if (lista == null) {
-                        System.out.println("Creando una nueva lista...");
-                        lista = new ListaSimple();
+            lista.agregarPersonaInicio(new Persona(nombre, apellido, estatura, peso));
+            System.out.println("Persona agregada exitosamente.");
+            break;
 
-                        Scanner scanner = new Scanner(System.in);
-                        System.out.print("Ingrese el nombre de la persona: ");
-                        String nombre = scanner.nextLine();
+        case 2:
+            // Mostrar Personas
+            lista.mostrarLista();
+            System.out.println("Cantidad de nodos: " + lista.ContarNodos());
+            break;
 
-                        System.out.print("Ingrese el apellido de la persona: ");
-                        String apellido = scanner.nextLine();
+        case 3:
+            // Eliminar Persona
+            System.out.print("Ingrese el nombre de la persona a eliminar: ");
+            String nombreEliminar = scanner.nextLine();
+            if (lista.eliminarPersona(nombreEliminar))
+                System.out.println("Persona eliminada.");
+            else
+                System.out.println("No se encontró la persona.");
+            break;
 
-                        System.out.print("Ingrese la estatura (en cm): ");
-                        int estatura = scanner.nextInt();
+        case 4:
+            // Buscar Persona
+            System.out.print("Ingrese el nombre de la persona a buscar: ");
+            String nombreBuscar = scanner.nextLine();
+            Persona encontrada = lista.buscarPersona(nombreBuscar);
+            if (encontrada != null)
+                System.out.println("Persona encontrada: " + encontrada);
+            else
+                System.out.println("No se encontró la persona.");
+            break;
 
-                        System.out.print("Ingrese el peso (en kg): ");
-                        float peso = scanner.nextFloat();
-                        scanner.nextLine();
+        case 5:
+            // Promedio de estatura y peso
+            lista.promedioEstaturaPeso();
+            break;
 
-                        Persona nuevaPersona = new Persona(nombre, apellido, estatura, peso);
-                        lista.agregarPersonaInicio(nuevaPersona);
+        case 6:
+            System.out.println("Saliendo del sistema de listas...");
+            break;
 
-                        System.out.println("Persona agregada exitosamente.");
+        default:
+            System.out.println("Opción inválida.");
+    }
+} while (opcion != 6);
 
-                        break;
-
-                    }
-
-                    // agregar persona
-                    break;
-                case 2:
-                    // mostrar personas
-                    break;
-                case 3:
-                    // eliminar persona
-                    break;
-                case 4:
-                    // buscar persona
-                    break;
-                case 5:
-                    // promedio estatura y peso
-                    break;
-                case 6:
-                    System.out.println("Saliendo del sistema de listas...");
-                    break;
-                default:
-                    System.out.println("Opción no válida. Por favor, intente de nuevo.");
-
-            }
-        } while (opcion != 6);
 
     }
 }
-/* juego torres de Hanoi , termino de recursividad */
+
