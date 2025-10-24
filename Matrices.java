@@ -225,11 +225,3 @@ public class Matrices {
         System.out.println("Promedio de Peso: " + promedioPeso + " kg");
     }
 }
-
-/*
- * hacer 2 metodos en el cual la matriz principal sume los pesos y me devuelva
- * el promedo de peso
- * y otro metodo que sume las estaturas y me devuelva el promedio de estatura
- * 
- * y crear un menu para matrices
- */
